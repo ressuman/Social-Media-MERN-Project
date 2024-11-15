@@ -3,10 +3,32 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
-  "keywords": [],
-  "author": "",
+  "type": "commonjs",
+  "keywords": [
+    "social media",
+    "MERN",
+    "Echosphere Loop"
+  ],
+  "author": {
+    "name": "Richard Essuman",
+    "email": "ressuman001@gmail.com"
+  },
   "license": "ISC",
-  "description": ""
+  "description": "Echosphere Loop is a dynamic social media platform built on the MERN stack, offering features like real-time updates, user profiles, and multimedia sharing for connected and engaging interactions.",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.8.1",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
 }
