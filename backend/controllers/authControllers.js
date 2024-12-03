@@ -27,11 +27,11 @@ exports.signup = async (req, res) => {
     if (isExisting) {
       return res
         .status(409)
-        .json({ error: "Email is already registered.", success: false });
+        .json({ error: "User already exists.", success: false });
     }
 
     // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 12);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create the new user
     const newUser = await User.create({
@@ -41,17 +41,17 @@ exports.signup = async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
-      expiresIn: "5h",
+      expiresIn: "30d",
     });
 
     // Exclude password from response
     const { password: _, ...userWithoutPassword } = newUser._doc;
 
     return res.status(201).json({
+      success: true,
       message: "User created successfully",
       user: userWithoutPassword,
       token,
-      success: true,
     });
   } catch (error) {
     console.error("Registration Error:", error);
@@ -75,9 +75,7 @@ exports.login = async (req, res) => {
     // Check if the user exists
     const user = await User.findOne({ email });
     if (!user) {
-      return res
-        .status(401)
-        .json({ error: "Invalid credentials.", success: false });
+      return res.status(401).json({ error: "User not found.", success: false });
     }
 
     // Verify password
@@ -90,17 +88,17 @@ exports.login = async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "5h",
+      expiresIn: "30d",
     });
 
     // Exclude password from response
     const { password: _, ...userWithoutPassword } = user._doc;
 
     return res.status(200).json({
+      success: true,
       message: "Login successful.",
       user: userWithoutPassword,
       token,
-      success: true,
     });
   } catch (error) {
     console.error("Login Error:", error);
